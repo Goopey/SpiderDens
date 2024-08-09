@@ -12,7 +12,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ModItemStateProvider extends ItemModelProvider {
   public ModItemStateProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-    super(output, SpiderDens.MODID, existingFileHelper);
+    super(output, SpiderDens.MOD_ID, existingFileHelper);
   }
 
   @Override

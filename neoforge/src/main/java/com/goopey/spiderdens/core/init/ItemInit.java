@@ -7,7 +7,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ItemInit {
-  public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(SpiderDens.MODID);
+  public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(SpiderDens.MOD_ID);
 
   public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties()));
 }

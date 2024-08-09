@@ -21,18 +21,20 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
+import com.goopey.spiderdens.core.init.BlockInit;
 import com.goopey.spiderdens.core.init.ItemInit;
 import com.goopey.spiderdens.data.DataGenerators;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(SpiderDens.MODID)
+@Mod(SpiderDens.MOD_ID)
 public class SpiderDens {
-    public static final String MODID = "spiderdens";
+    public static final String MOD_ID = "spiderdens";
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public SpiderDens(IEventBus modEventBus, ModContainer modContainer) {
         // register
         ItemInit.ITEMS.register(modEventBus);
+        BlockInit.BLOCKS.register(modEventBus);
 
         // listeners
         modEventBus.addListener(DataGenerators::gatherData);
@@ -54,12 +56,12 @@ public class SpiderDens {
     public void onServerStarting(ServerStartingEvent event) {
     }
 
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Log when the mod is done loading if it is loaded.
-            ModList.get().getModContainerById(MODID).ifPresent(modContainer -> {
+            ModList.get().getModContainerById(MOD_ID).ifPresent(modContainer -> {
                 LOGGER.info("Loaded {}, using version {}", modContainer.getModInfo().getDisplayName(), modContainer.getModInfo().getVersion());
             });
         }
