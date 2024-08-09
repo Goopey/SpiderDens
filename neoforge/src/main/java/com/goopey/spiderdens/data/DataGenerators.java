@@ -2,6 +2,7 @@ package com.goopey.spiderdens.data;
 
 import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.data.lang.ModENLangProvider;
+import com.goopey.spiderdens.data.texture.ModBlockStateProvider;
 import com.goopey.spiderdens.data.texture.ModItemStateProvider;
 
 import net.minecraft.data.PackOutput;
@@ -19,6 +20,7 @@ public class DataGenerators {
 
       generator.addProvider(true, new ModENLangProvider(output));
       generator.addProvider(true, new ModItemStateProvider(output, existingFileHelper));
+      generator.addProvider(true, new ModBlockStateProvider(output, existingFileHelper));
     } catch(RuntimeException e) {
       SpiderDens.LOGGER.error("Failed to generate data", e);
     }
