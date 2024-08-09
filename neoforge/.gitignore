@@ -23,5 +23,7 @@ run
 runs
 run-data
 config
+client
+server
 
 repo
