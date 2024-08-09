@@ -22,16 +22,22 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 import com.goopey.spiderdens.core.init.ItemInit;
+import com.goopey.spiderdens.data.DataGenerators;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(SpiderDens.MODID)
 public class SpiderDens {
     public static final String MODID = "spiderdens";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public SpiderDens(IEventBus modEventBus, ModContainer modContainer) {
+        // register
         ItemInit.ITEMS.register(modEventBus);
 
+        // listeners
+        modEventBus.addListener(DataGenerators::gatherData);
+
+        // Event Buses
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
