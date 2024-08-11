@@ -17,10 +17,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        normalBlock(BlockInit.EXAMPLE_BLOCK.value());
+        addBlock(BlockInit.EXAMPLE_BLOCK.value());
     }
 
-    protected void normalBlock(Block block) {
+    protected void addBlock(Block block) {
         ResourceLocation blockKey = BuiltInRegistries.BLOCK.getKey(block);
         String path = blockKey.getPath();
         simpleBlock(block, models().cubeAll(path, modLoc("block/" + path)));
