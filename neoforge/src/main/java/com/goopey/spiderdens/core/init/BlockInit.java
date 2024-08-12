@@ -16,6 +16,8 @@ public class BlockInit {
 
   public static final DeferredBlock<Block> EXAMPLE_BLOCK = registerBlock("example_block", () -> new Block(Block.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
+  // public static final DeferredBlock<Block> 
+
   /**
    * Used to register a Block and its BlockItem counterpart
    * 
