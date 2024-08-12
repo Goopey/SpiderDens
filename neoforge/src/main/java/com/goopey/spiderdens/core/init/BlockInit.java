@@ -14,9 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class BlockInit {
   public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(SpiderDens.MOD_ID);
 
-  public static final DeferredBlock<Block> EXAMPLE_BLOCK = registerBlock("example_block", () -> new Block(Block.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
-
-  // public static final DeferredBlock<Block> 
+  public static final DeferredBlock<Block> EXAMPLE_BLOCK = registerBlock("example_block", () -> new Block(Block.Properties.ofFullCopy(Blocks.DIRT)));
 
   /**
    * Used to register a Block and its BlockItem counterpart

@@ -38,11 +38,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         //  TagKey<Block> woodTags = createForgeTag("forge:needs_wood_tool");
 
         /// tags allowing the mining of the ores
-        tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(BlockInit.EXAMPLE_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE);
+                // .add(BlockInit.EXAMPLE_BLOCK.get());
 
-        tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(BlockInit.EXAMPLE_BLOCK.get());
+        tag(BlockTags.NEEDS_IRON_TOOL);
+                // .add(BlockInit.EXAMPLE_BLOCK.get());
     }
 
     private static TagKey<Block> createForgeTag(String name) {
