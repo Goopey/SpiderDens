@@ -25,24 +25,26 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         // ores
-        // tag(TagsInit.BlockTagsInit.ORES_EXAMPLE).add(BlockInit.EXAMPLE_ORE.get());
+        // tag(TagsInit.BlockTagsInit.ORES_SPIDERDENS);
 
-        // deepslate ores
-        // tag(TagsInit.BlockTagsInit.DEEPSLATE_ORES_EXAMPLE).add(BlockInit.DEEPSLATE_EXAMPLE_ORE.get());
+        // // deepslate ores
+        // tag(TagsInit.BlockTagsInit.DEEPSLATE_ORES_SPIDERDENS);
 
-        // storage blocks
-        // tag(TagsInit.BlockTagsInit.STORAGE_BLOCKS_EXAMPLE).add(BlockInit.EXAMPLE_BLOCK.get());
+        // // storage blocks
+        // tag(TagsInit.BlockTagsInit.STORAGE_BLOCKS_SPIDERDENS);
 
-        //        TagKey<Block> goldTags = createForgeTag("forge:needs_gold_tool");
-        //        TagKey<Block> netheriteTags = createForgeTag("forge:needs_netherite_tool");
-        //  TagKey<Block> woodTags = createForgeTag("forge:needs_wood_tool");
+        TagKey<Block> goldTags = createForgeTag("forge:needs_gold_tool");
+        TagKey<Block> netheriteTags = createForgeTag("forge:needs_netherite_tool");
+        TagKey<Block> woodTags = createForgeTag("forge:needs_wood_tool");
+
+        tag(woodTags)
+          .add(BlockInit.EXAMPLE_BLOCK.get());
 
         /// tags allowing the mining of the ores
-        tag(BlockTags.MINEABLE_WITH_PICKAXE);
-                // .add(BlockInit.EXAMPLE_BLOCK.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+          .add(BlockInit.EXAMPLE_BLOCK.get());
 
         tag(BlockTags.NEEDS_IRON_TOOL);
-                // .add(BlockInit.EXAMPLE_BLOCK.get());
     }
 
     private static TagKey<Block> createForgeTag(String name) {

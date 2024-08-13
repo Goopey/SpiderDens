@@ -13,13 +13,13 @@ public class TagsInit {
 
   public static class BlockTagsInit {
       // // Ores
-      // public static TagKey<Block> SPIDER_DENS_ORES = BlockTags.create(createResourceLocation("ores/example_ore"));
+      // public static TagKey<Block> ORES_SPIDERDENS = BlockTags.create(createResourceLocation("ores/example_ore"));
       
       // // Deepslate ores
-      // public static TagKey<Block> DEEPSLATE_SPIDER_DENS_ORES = BlockTags.create(createResourceLocation("deepslate_ores/example_block"));
+      // public static TagKey<Block> DEEPSLATE_ORES_SPIDERDENS = BlockTags.create(createResourceLocation("deepslate_ores/example_block"));
 
       // // For normal blocks - storage
-      // public static TagKey<Block> STORAGE_BLOCKS_EXAMPLE = BlockTags.create(createResourceLocation("storage_blocks/example_block"));
+      // public static TagKey<Block> STORAGE_BLOCKS_SPIDERDENS = BlockTags.create(createResourceLocation("storage_blocks/example_block"));
 
       // public static TagKey<Block> NEEDS_EXAMPLE = BlockTags.create(createCustomResourceLocation("needs_example"));
 
