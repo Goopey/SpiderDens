@@ -22,6 +22,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 import com.goopey.spiderdens.core.init.BlockInit;
+import com.goopey.spiderdens.core.init.CreativeModeTabInit;
 import com.goopey.spiderdens.core.init.ItemInit;
 import com.goopey.spiderdens.data.DataGenerators;
 
@@ -35,6 +36,7 @@ public class SpiderDens {
         // register
         ItemInit.ITEMS.register(modEventBus);
         BlockInit.BLOCKS.register(modEventBus);
+        CreativeModeTabInit.CREATIVE_MODE_TABS.register(modEventBus);
 
         // listeners
         modEventBus.addListener(DataGenerators::gatherData);

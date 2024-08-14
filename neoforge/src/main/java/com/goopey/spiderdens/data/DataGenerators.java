@@ -35,7 +35,6 @@ public class DataGenerators {
       ModBlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(output, event.getLookupProvider(), existingFileHelper);
       generator.addProvider(true, blockTagsProvider);
       generator.addProvider(true, new ModItemTagsProvider(output, event.getLookupProvider(), blockTagsProvider, existingFileHelper));
-            
     } catch(RuntimeException e) {
       SpiderDens.LOGGER.error("Failed to generate data", e);
     }

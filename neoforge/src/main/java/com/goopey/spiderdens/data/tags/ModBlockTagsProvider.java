@@ -2,7 +2,6 @@ package com.goopey.spiderdens.data.tags;
 
 import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.core.init.BlockInit;
-import com.goopey.spiderdens.core.init.TagsInit;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

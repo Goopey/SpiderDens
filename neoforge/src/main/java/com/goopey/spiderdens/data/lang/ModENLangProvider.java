@@ -2,6 +2,7 @@ package com.goopey.spiderdens.data.lang;
 
 import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.core.init.BlockInit;
+import com.goopey.spiderdens.core.init.CreativeModeTabInit;
 import com.goopey.spiderdens.core.init.ItemInit;
 
 import net.minecraft.data.PackOutput;
@@ -16,6 +17,7 @@ public class ModENLangProvider extends LanguageProvider {
   protected void addTranslations() {
     blocks();
     items();
+    creativeTabs();
   }
 
   private void items() {
@@ -24,5 +26,9 @@ public class ModENLangProvider extends LanguageProvider {
 
   private void blocks() {
     addBlock(BlockInit.EXAMPLE_BLOCK, "Example Block");
+  }
+
+  private void creativeTabs() {
+    add(CreativeModeTabInit.SPIDER_DENS_TAB_TITLE, "Tutorial Mod");    
   }
 }
