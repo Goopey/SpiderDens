@@ -16,6 +16,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         super(p_275343_, p_275729_, blockTagsProvider.contentsGetter(), SpiderDens.MOD_ID, existingFileHelper);
     }
 
+    @SuppressWarnings("null")
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         // ingots

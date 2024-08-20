@@ -21,7 +21,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
   @Override
   protected void generate() {
-    dropSelf(BlockInit.EXAMPLE_BLOCK.get());
+    dropSelf(BlockInit.FILTER_HOPPER.get());
   }
 
   @Override

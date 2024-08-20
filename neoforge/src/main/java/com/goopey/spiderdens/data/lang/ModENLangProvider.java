@@ -25,7 +25,7 @@ public class ModENLangProvider extends LanguageProvider {
   }
 
   private void blocks() {
-    addBlock(BlockInit.EXAMPLE_BLOCK, "Example Block");
+    addBlock(BlockInit.FILTER_HOPPER, "Filter Hopper");
   }
 
   private void creativeTabs() {

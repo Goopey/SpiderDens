@@ -21,6 +21,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         super(output, lookupProvider, SpiderDens.MOD_ID, existingFileHelper);
     }
 
+    @SuppressWarnings("null")
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         // ores
@@ -36,14 +37,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         TagKey<Block> netheriteTags = createForgeTag("forge:needs_netherite_tool");
         TagKey<Block> woodTags = createForgeTag("forge:needs_wood_tool");
 
-        tag(woodTags)
-          .add(BlockInit.EXAMPLE_BLOCK.get());
+        tag(woodTags);
 
         /// tags allowing the mining of the ores
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-          .add(BlockInit.EXAMPLE_BLOCK.get());
+          .add(BlockInit.FILTER_HOPPER.get());
 
-        tag(BlockTags.NEEDS_IRON_TOOL);
+        tag(BlockTags.NEEDS_IRON_TOOL)
+          .add(BlockInit.FILTER_HOPPER.get());
     }
 
     private static TagKey<Block> createForgeTag(String name) {

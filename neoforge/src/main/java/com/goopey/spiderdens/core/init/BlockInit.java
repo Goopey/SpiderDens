@@ -8,13 +8,14 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HopperBlock;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class BlockInit {
   public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(SpiderDens.MOD_ID);
 
-  public static final DeferredBlock<Block> EXAMPLE_BLOCK = registerBlock("example_block", () -> new Block(Block.Properties.ofFullCopy(Blocks.DIRT)));
+  public static final DeferredBlock<Block> FILTER_HOPPER = registerBlock("filter_hopper", () -> new HopperBlock(Block.Properties.ofFullCopy(Blocks.HOPPER)));
 
   /**
    * Used to register a Block and its BlockItem counterpart

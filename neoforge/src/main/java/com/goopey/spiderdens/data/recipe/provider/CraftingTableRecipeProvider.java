@@ -22,9 +22,10 @@ public class CraftingTableRecipeProvider extends MainModRecipeProvider {
     }
 
     public void build() {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, BlockInit.EXAMPLE_BLOCK.get(), 1)
-                .requires(ItemInit.EXAMPLE_ITEM.get(), 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, BlockInit.FILTER_HOPPER.get(), 1)
+                .requires(ItemInit.EXAMPLE_ITEM.get(), 1)
+                .requires(Items.HOPPER)
                 .unlockedBy("has_item", has(ItemInit.EXAMPLE_ITEM.get()))
-                .save(output, getModId("example_item_block_recipe"));
+                .save(output, getModId("filter_hopper_recipe"));
     }
 }
