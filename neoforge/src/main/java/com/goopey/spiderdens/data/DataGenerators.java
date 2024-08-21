@@ -25,16 +25,18 @@ public class DataGenerators {
       PackOutput output = event.getGenerator().getPackOutput();
       ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
       CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+      boolean includeServer = event.includeServer();
+      boolean includeClient = event.includeClient();
 
       generator.addProvider(true, new ModENLangProvider(output));
       generator.addProvider(true, new ModItemStateProvider(output, existingFileHelper));
-      generator.addProvider(true, new ModBlockStateProvider(output, existingFileHelper));
-      generator.addProvider(true, new ModLootTables(output, lookupProvider));
-      generator.addProvider(true, new MainModRecipeProvider(generator, lookupProvider));
+      generator.addProvider(includeClient, new ModBlockStateProvider(output, existingFileHelper));
+      generator.addProvider(includeServer, new ModLootTables(output, lookupProvider));
+      generator.addProvider(includeServer, new MainModRecipeProvider(generator, lookupProvider));
 
-      ModBlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(output, event.getLookupProvider(), existingFileHelper);
-      generator.addProvider(true, blockTagsProvider);
-      generator.addProvider(true, new ModItemTagsProvider(output, event.getLookupProvider(), blockTagsProvider, existingFileHelper));
+      ModBlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(output, lookupProvider, existingFileHelper);
+      generator.addProvider(includeServer, blockTagsProvider);
+      generator.addProvider(includeServer, new ModItemTagsProvider(output, lookupProvider, blockTagsProvider, existingFileHelper));
     } catch(RuntimeException e) {
       SpiderDens.LOGGER.error("Failed to generate data", e);
     }
