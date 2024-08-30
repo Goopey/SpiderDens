@@ -26,8 +26,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void addBlock(Block block) {
         ResourceLocation blockKey = BuiltInRegistries.BLOCK.getKey(block);
         String path = blockKey.getPath();
-        simpleBlock(block, models().cubeAll(path, modLoc("block/" + path)));
-        simpleBlockItem(block, models().getExistingFile(modLoc("block/" + path)));
+        this.simpleBlock(block, models().cubeAll(path, modLoc("block/" + path)));
+        this.simpleBlockItem(block, models().getExistingFile(modLoc("block/" + path)));
     }
 
     protected void addHopper(Block block) {
@@ -35,14 +35,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
         String path = blockKey.getPath();
         String blockPath = "block/" + path;
         String itemPath = "item/" + path;
-        simpleBlock(block, 
-            models()
+        this.simpleBlock(block, 
+            this.models()
                 .withExistingParent(path, "hopper")
                 .texture("particle", modLoc(blockPath + "_outside"))
                 .texture("top", modLoc(blockPath + "_top"))
                 .texture("side", modLoc(blockPath + "_outside"))
                 .texture("inside", modLoc(blockPath + "_inside"))
         );
+        
         // simpleBlock(block, 
         //     models()
         //         .withExistingParent(path, "hopper_side")
@@ -51,9 +52,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         //         .texture("side", modLoc(blockPath + "_outside"))
         //         .texture("inside", modLoc(blockPath + "_inside"))
         // );
+        
         simpleBlockItem(block, 
-            models()
-                .withExistingParent(itemPath, "item/generated")
+            this.models()
+                .getBuilder(itemPath)
+                .parent(this.models().getExistingFile(mcLoc("item/generated")))
                 .texture("layer0", itemPath)
         );
     }
