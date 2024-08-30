@@ -42,7 +42,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .texture("top", modLoc(blockPath + "_top"))
                 .texture("side", modLoc(blockPath + "_outside"))
                 .texture("inside", modLoc(blockPath + "_inside"))
-                .texture("layer0", itemPath)
         );
         // simpleBlock(block, 
         //     models()
@@ -54,7 +53,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // );
         simpleBlockItem(block, 
             models()
-                .getExistingFile(modLoc(blockPath))
+                .withExistingParent(itemPath, "item/generated")
+                .texture("layer0", itemPath)
         );
     }
 }
