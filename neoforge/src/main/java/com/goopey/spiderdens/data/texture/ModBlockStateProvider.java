@@ -34,6 +34,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         this.simpleBlockItem(block, models().getExistingFile(modLoc("block/" + path)));
     }
 
+    /**
+     * 
+     * @param block the HopperBlock 
+     */
     protected void addHopper(HopperBlock block) {
         ResourceLocation blockKey = BuiltInRegistries.BLOCK.getKey(block);
         String path = blockKey.getPath();
@@ -50,6 +54,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .texture("layer0", itemPath)
         );
     }
+
     private ConfiguredModel[] hopperStates(BlockState state, HopperBlock block, String path, String blockPath) {
         ConfiguredModel[] models = new ConfiguredModel[1];
         String sidePath = path + "_side";
@@ -77,11 +82,28 @@ public class ModBlockStateProvider extends BlockStateProvider {
             models[0] = new ConfiguredModel(
                 sideModel, 
                 0, 
-                (state.getValue(HopperBlock.FACING).ordinal() - 1) * 90, 
+                getFacingInt(state.getValue(HopperBlock.FACING)) * 90, 
                 false
             );
 
             return models;
         }
+    }
+
+    private int getFacingInt(Direction i) {
+        switch (i.ordinal()) {
+            case 1:
+               return 0;
+            case 2:
+               return 4;
+            case 3:
+               return 2;
+            case 4:
+               return 3;
+            case 5:
+               return 1;
+            default:
+               return 0;
+         }
     }
 }

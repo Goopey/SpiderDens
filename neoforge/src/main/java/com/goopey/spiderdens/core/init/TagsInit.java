@@ -19,7 +19,7 @@ public class TagsInit {
       // public static TagKey<Block> DEEPSLATE_ORES_SPIDERDENS = BlockTags.create(createResourceLocation("deepslate_ores/example_block"));
 
       // // For normal blocks - storage
-      // public static TagKey<Block> STORAGE_BLOCKS_SPIDERDENS = BlockTags.create(createResourceLocation("storage_blocks/example_block"));
+      public static TagKey<Block> STORAGE_BLOCKS_SPIDERDENS = BlockTags.create(createResourceLocation("storage_blocks/storage_blocks"));
 
       // public static TagKey<Block> NEEDS_EXAMPLE = BlockTags.create(createCustomResourceLocation("needs_example"));
 
@@ -41,7 +41,7 @@ public class TagsInit {
       // public static TagKey<Item> DEEPSLATE_ORES_EXAMPLE = ItemTags.create(createResourceLocation("deepslate_ores/example_ore"));
 
       // // For normal blocks - storage
-      // public static TagKey<Item> STORAGE_BLOCKS_EXAMPLE = ItemTags.create(createResourceLocation("storage_blocks/example_block"));
+      public static TagKey<Item> STORAGE_BLOCKS_SPIDERDENS = ItemTags.create(createResourceLocation("storage_blocks/storage_blocks"));
 
       // Items
 

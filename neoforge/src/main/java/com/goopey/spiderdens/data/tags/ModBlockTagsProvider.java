@@ -2,6 +2,7 @@ package com.goopey.spiderdens.data.tags;
 
 import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.core.init.BlockInit;
+import com.goopey.spiderdens.core.init.TagsInit;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -31,7 +32,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // tag(TagsInit.BlockTagsInit.DEEPSLATE_ORES_SPIDERDENS);
 
         // // storage blocks
-        // tag(TagsInit.BlockTagsInit.STORAGE_BLOCKS_SPIDERDENS);
+        tag(TagsInit.BlockTagsInit.STORAGE_BLOCKS_SPIDERDENS)
+          .add(BlockInit.FILTER_HOPPER.get());
 
         TagKey<Block> goldTags = createForgeTag("forge:needs_gold_tool");
         TagKey<Block> netheriteTags = createForgeTag("forge:needs_netherite_tool");
