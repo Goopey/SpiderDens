@@ -1,4 +1,4 @@
-package com.goopey.spiderdens.world.blockentity;
+package com.goopey.spiderdens.world.block.entity;
 
 import com.goopey.spiderdens.core.init.BlockEntityInit;
 import com.goopey.spiderdens.core.init.ItemInit;

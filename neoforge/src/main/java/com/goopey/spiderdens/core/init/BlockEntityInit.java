@@ -1,7 +1,7 @@
 package com.goopey.spiderdens.core.init;
 
 import com.goopey.spiderdens.SpiderDens;
-import com.goopey.spiderdens.world.blockentity.FilterHopperBlockEntity;
+import com.goopey.spiderdens.world.block.entity.FilterHopperBlockEntity;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;

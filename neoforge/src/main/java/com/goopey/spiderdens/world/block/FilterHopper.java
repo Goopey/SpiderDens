@@ -1,9 +1,7 @@
 package com.goopey.spiderdens.world.block;
 
-import javax.annotation.Nullable;
-
 import com.goopey.spiderdens.core.init.BlockEntityInit;
-import com.goopey.spiderdens.world.blockentity.FilterHopperBlockEntity;
+import com.goopey.spiderdens.world.block.entity.FilterHopperBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
