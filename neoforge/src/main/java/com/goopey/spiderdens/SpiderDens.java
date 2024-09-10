@@ -25,6 +25,7 @@ import com.goopey.spiderdens.core.init.BlockEntityInit;
 import com.goopey.spiderdens.core.init.BlockInit;
 import com.goopey.spiderdens.core.init.CreativeModeTabInit;
 import com.goopey.spiderdens.core.init.ItemInit;
+import com.goopey.spiderdens.core.init.MenuInit;
 import com.goopey.spiderdens.data.DataGenerators;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -39,6 +40,7 @@ public class SpiderDens {
         BlockInit.BLOCKS.register(modEventBus);
         CreativeModeTabInit.CREATIVE_MODE_TABS.register(modEventBus);
         BlockEntityInit.BLOCK_ENTITY.register(modEventBus);
+        MenuInit.MENU_REGISTER.register(modEventBus);
 
         // listeners
         modEventBus.addListener(DataGenerators::gatherData);
