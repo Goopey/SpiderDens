@@ -88,12 +88,13 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
    }
 
    private static boolean checkMatch(ItemStack item, NonNullList<ItemStack> filterItems) {
-      // for (ItemStack filterItem : filterItems) {
-      //    if (item.getItem().equals(filterItem.getItem())) {
-      //       return true;
-      //    }
-      // }         
-      return item.getItem().equals(ItemInit.EXAMPLE_ITEM.get());
+      for (ItemStack filterItem : filterItems) {
+         if (item.getItem().equals(filterItem.getItem())) {
+            return true;
+         }
+      }         
+
+      return false;
    }
 
    //###################################################
