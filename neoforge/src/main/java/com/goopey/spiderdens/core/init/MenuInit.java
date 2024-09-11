@@ -3,7 +3,7 @@ package com.goopey.spiderdens.core.init;
 import java.util.function.Supplier;
 
 import com.goopey.spiderdens.SpiderDens;
-import com.goopey.spiderdens.world.screens.FilterHopperMenu;
+import com.goopey.spiderdens.world.screens.menu.FilterHopperMenu;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.MenuType;

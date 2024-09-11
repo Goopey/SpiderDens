@@ -1,9 +1,8 @@
 package com.goopey.spiderdens.world.block.entity;
 
 import com.goopey.spiderdens.core.init.BlockEntityInit;
-import com.goopey.spiderdens.core.init.ItemInit;
 import com.goopey.spiderdens.world.block.FilterHopper;
-import com.goopey.spiderdens.SpiderDens;
+import com.goopey.spiderdens.world.screens.FilterHopperMenu;
 
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +21,6 @@ import net.minecraft.world.WorldlyContainerHolder;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.HopperMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -394,7 +392,7 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
 
    @Override
    protected AbstractContainerMenu createMenu(int id, Inventory player) {
-      return new HopperMenu(id, player, this);
+      return new FilterHopperMenu(id, player, this);
    }
 
    @Override

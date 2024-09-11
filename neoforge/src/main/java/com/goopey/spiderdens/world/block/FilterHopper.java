@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
@@ -23,14 +22,14 @@ public class FilterHopper extends HopperBlock {
    }
 
    @Override
-   protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+   protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player player, BlockHitResult pHitResult) {
       if (pLevel.isClientSide) {
          return InteractionResult.SUCCESS;
       } else {
          BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-         if (blockentity instanceof HopperBlockEntity) {
-            pPlayer.openMenu((HopperBlockEntity)blockentity);
-            pPlayer.awardStat(Stats.INSPECT_HOPPER);
+         if (blockentity instanceof FilterHopperBlockEntity) {
+            player.openMenu((FilterHopperBlockEntity)blockentity);
+            player.awardStat(Stats.INSPECT_HOPPER);
          }
 
          return InteractionResult.CONSUME;
