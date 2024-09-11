@@ -16,7 +16,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -26,6 +26,7 @@ import com.goopey.spiderdens.core.init.BlockInit;
 import com.goopey.spiderdens.core.init.CreativeModeTabInit;
 import com.goopey.spiderdens.core.init.ItemInit;
 import com.goopey.spiderdens.core.init.MenuInit;
+import com.goopey.spiderdens.core.init.ScreenInit;
 import com.goopey.spiderdens.data.DataGenerators;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -49,6 +50,7 @@ public class SpiderDens {
         modEventBus.addListener(this::commonSetup);
         NeoForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(this::registerScreens);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
@@ -60,6 +62,10 @@ public class SpiderDens {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
+    }
+
+    public void registerScreens(RegisterMenuScreensEvent modEvent) {
+        ScreenInit.registerScreens(modEvent);
     }
 
     @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
