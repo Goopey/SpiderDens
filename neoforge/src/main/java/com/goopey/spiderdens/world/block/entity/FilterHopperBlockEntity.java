@@ -2,7 +2,7 @@ package com.goopey.spiderdens.world.block.entity;
 
 import com.goopey.spiderdens.core.init.BlockEntityInit;
 import com.goopey.spiderdens.world.block.FilterHopper;
-import com.goopey.spiderdens.world.screens.FilterHopperMenu;
+import com.goopey.spiderdens.world.screens.menu.FilterHopperMenu;
 
 import java.util.Iterator;
 import java.util.List;
