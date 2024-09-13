@@ -28,26 +28,26 @@ public class FilterHopperMenu extends AbstractContainerMenu {
 
       // Hopper Inventory
       for(int i = 0; i < 5; ++i) {
-         this.addSlot(new Slot(container, i, 44 + i * 18, 13));
+         this.addSlot(new Slot(container, i, 44 + i * 18, 16));
       }
 
       // Hopper Filter Inventory
       for(int i = 0; i < 3; ++i) {
          for(int k = 0; k < 9; ++k) {
-            this.addSlot(new GhostSlot(container, k + i * 9 + 9, 8 + k * 18, i * 18 + 35));
+            this.addSlot(new GhostSlot(container, k + i * 9 + 9, 8 + k * 18, i * 18 + 38));
          }
       }
 
       // Player Inventory
       for(int i = 0; i < 3; ++i) {
          for(int k = 0; k < 9; ++k) {
-            this.addSlot(new Slot(playerInventory, k + i * 9 + 9, 8 + k * 18, i * 18 + 98));
+            this.addSlot(new Slot(playerInventory, k + i * 9 + 9, 8 + k * 18, i * 18 + 103));
          }
       }
 
       // Player Hotbar
       for(int i = 0; i < 9; ++i) {
-         this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 156));
+         this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 161));
       }
 
    }

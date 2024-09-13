@@ -14,12 +14,9 @@ public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu
 
   public FilterHopperScreen(FilterHopperMenu menu, Inventory playerInventory, Component title) {
     super(menu, playerInventory, title);
-		this.imageHeight = 180;
+		this.imageHeight = 185;
 		this.imageWidth = 176;
-		this.titleLabelX = 6;
-		this.titleLabelY = 3;
-		this.inventoryLabelX = 6;
-		this.inventoryLabelY = this.imageHeight - 91;
+		this.inventoryLabelY = this.imageHeight - 93;
   }
 
   public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
