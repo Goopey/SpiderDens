@@ -1,5 +1,6 @@
 package com.goopey.spiderdens.world.screens;
 
+import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.world.screens.menu.FilterHopperMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,16 +10,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu> {
-  private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation("textures/gui/container/generic_54.png");
-	private final int containerRows;
+  private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(SpiderDens.MOD_ID, "textures/gui/container/filter_screen.png");
 
   public FilterHopperScreen(FilterHopperMenu menu, Inventory playerInventory, Component title) {
     super(menu, playerInventory, title);
-		int i = 222;
-		int j = 114;
-		this.containerRows = 2;
-		this.imageHeight = j + this.containerRows * 18;
-		this.inventoryLabelY = this.imageHeight - 94;
+		this.imageHeight = 180;
+		this.imageWidth = 176;
+		this.titleLabelX = 6;
+		this.titleLabelY = 3;
+		this.inventoryLabelX = 6;
+		this.inventoryLabelY = this.imageHeight - 91;
   }
 
   public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
@@ -26,12 +27,11 @@ public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		this.renderTooltip(guiGraphics, mouseX, mouseY);
   }
-
+ 
   @Override
   protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
     int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		guiGraphics.blit(CONTAINER_BACKGROUND, i, j, 0, 0, this.imageWidth, this.containerRows * 18 + 17);
-		guiGraphics.blit(CONTAINER_BACKGROUND, i, j + this.containerRows * 18 + 17, 0, 126, this.imageWidth, 96);
+		guiGraphics.blit(CONTAINER_BACKGROUND, i, j, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
   }
 }

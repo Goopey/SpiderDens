@@ -11,11 +11,14 @@ import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.WorldlyContainerHolder;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -54,6 +57,42 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       this.filterItems = NonNullList.withSize(HOPPER_FILTER_SIZE, ItemStack.EMPTY);
       this.cooldownTime = -1;
       this.facing = (Direction)blockState.getValue(FilterHopper.FACING);
+   }
+
+   protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+      super.loadAdditional(pTag, pRegistries);
+      this.items = NonNullList.withSize(HOPPER_CONTAINER_SIZE, ItemStack.EMPTY);
+      this.filterItems = NonNullList.withSize(HOPPER_FILTER_SIZE, ItemStack.EMPTY);
+      if (!this.tryLoadLootTable(pTag)) {
+         NonNullList<ItemStack> allItems = NonNullList.withSize(HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE, ItemStack.EMPTY);
+         ContainerHelper.loadAllItems(pTag, allItems, pRegistries);
+
+         for (int i = 0; i < HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE; i++) {
+            if (i < HOPPER_CONTAINER_SIZE) {
+               // Set Hopper Inventory stuff
+               this.items.set(i, allItems.get(i));
+            } else {
+               // Set Filter Items stuff
+               this.filterItems.set(i - HOPPER_CONTAINER_SIZE, allItems.get(i));
+            }
+         }
+      }
+
+      this.cooldownTime = pTag.getInt("TransferCooldown");
+   }
+
+   protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+      super.saveAdditional(pTag, pRegistries);
+      if (!this.trySaveLootTable(pTag)) {
+         NonNullList<ItemStack> allItems = NonNullList.copyOf(this.items);
+         for (ItemStack item : this.filterItems) {
+            allItems.add(item);
+         }
+
+         ContainerHelper.saveAllItems(pTag, allItems, pRegistries);
+      }
+
+      pTag.putInt("TransferCooldown", this.cooldownTime);
    }
 
    //####################################################
@@ -363,7 +402,7 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
 
    @Override
    public int getContainerSize() {
-      return HOPPER_CONTAINER_SIZE;
+      return HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE;
    }
 
    @Override

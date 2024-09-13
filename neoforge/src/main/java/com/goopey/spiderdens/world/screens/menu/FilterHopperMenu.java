@@ -13,31 +13,41 @@ import net.minecraft.world.item.ItemStack;
 
 public class FilterHopperMenu extends AbstractContainerMenu {
    public static final int CONTAINER_SIZE = 5;
+   public static final int FILTER_CONTAINER_SIZE = 27;
    private final Container hopper;
 
    public FilterHopperMenu(int containerId, Inventory playerInventory, final FriendlyByteBuf data) {
-      this(containerId, playerInventory, new SimpleContainer(5));
+      this(containerId, playerInventory, new SimpleContainer(CONTAINER_SIZE + FILTER_CONTAINER_SIZE));
    }
 
    public FilterHopperMenu(int containerId, Inventory playerInventory, Container container) {
       super(MenuInit.FILTER_HOPPER_MENU.get(), containerId);
       this.hopper = container;
-      checkContainerSize(container, 5);
+      checkContainerSize(container, CONTAINER_SIZE);
       container.startOpen(playerInventory.player);
 
-      int i1;
-      for(i1 = 0; i1 < 5; ++i1) {
-         this.addSlot(new Slot(container, i1, 44 + i1 * 18, 20));
+      // Hopper Inventory
+      for(int i = 0; i < 5; ++i) {
+         this.addSlot(new Slot(container, i, 44 + i * 18, 13));
       }
 
-      for(i1 = 0; i1 < 3; ++i1) {
+      // Hopper Filter Inventory
+      for(int i = 0; i < 3; ++i) {
          for(int k = 0; k < 9; ++k) {
-            this.addSlot(new Slot(playerInventory, k + i1 * 9 + 9, 8 + k * 18, i1 * 18 + 51));
+            this.addSlot(new GhostSlot(container, k + i * 9 + 9, 8 + k * 18, i * 18 + 35));
          }
       }
 
-      for(i1 = 0; i1 < 9; ++i1) {
-         this.addSlot(new Slot(playerInventory, i1, 8 + i1 * 18, 109));
+      // Player Inventory
+      for(int i = 0; i < 3; ++i) {
+         for(int k = 0; k < 9; ++k) {
+            this.addSlot(new Slot(playerInventory, k + i * 9 + 9, 8 + k * 18, i * 18 + 98));
+         }
+      }
+
+      // Player Hotbar
+      for(int i = 0; i < 9; ++i) {
+         this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 156));
       }
 
    }
@@ -49,21 +59,24 @@ public class FilterHopperMenu extends AbstractContainerMenu {
    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
       ItemStack itemstack = ItemStack.EMPTY;
       Slot slot = (Slot)this.slots.get(pIndex);
-      if (slot != null && slot.hasItem()) {
-         ItemStack itemstack1 = slot.getItem();
-         itemstack = itemstack1.copy();
-         if (pIndex < this.hopper.getContainerSize()) {
-            if (!this.moveItemStackTo(itemstack1, this.hopper.getContainerSize(), this.slots.size(), true)) {
+      
+      if (!(slot instanceof GhostSlot)) {
+         if (slot != null && slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
+            itemstack = itemstack1.copy();
+            if (pIndex < this.hopper.getContainerSize()) {
+               if (!this.moveItemStackTo(itemstack1, this.hopper.getContainerSize(), this.slots.size(), true)) {
+                  return ItemStack.EMPTY;
+               }
+            } else if (!this.moveItemStackTo(itemstack1, 0, this.hopper.getContainerSize(), false)) {
                return ItemStack.EMPTY;
             }
-         } else if (!this.moveItemStackTo(itemstack1, 0, this.hopper.getContainerSize(), false)) {
-            return ItemStack.EMPTY;
-         }
 
-         if (itemstack1.isEmpty()) {
-            slot.setByPlayer(ItemStack.EMPTY);
-         } else {
-            slot.setChanged();
+            if (itemstack1.isEmpty()) {
+               slot.setByPlayer(ItemStack.EMPTY);
+            } else {
+               slot.setChanged();
+            }
          }
       }
 
