@@ -56,25 +56,25 @@ public class FilterHopperMenu extends AbstractContainerMenu {
       }
    }
 
-   @Override
-   public void clicked(int slotId, int button, ClickType clickType, Player player) {
-      try {
-         if (this.slots.get(slotId) instanceof GhostSlot) {
-            super.clicked(slotId, button, clickType, player);
-         } else {
-            super.clicked(slotId, button, clickType, player);
-         }
-      } catch (Exception exception) {
-         CrashReport crashreport = CrashReport.forThrowable(exception, "Container click");
-         CrashReportCategory crashreportcategory = crashreport.addCategory("Click info");
-         crashreportcategory.setDetail("Menu Class", () -> this.getClass().getCanonicalName());
-         crashreportcategory.setDetail("Slot Count", this.slots.size());
-         crashreportcategory.setDetail("Slot", slotId);
-         crashreportcategory.setDetail("Button", button);
-         crashreportcategory.setDetail("Type", clickType);
-         throw new ReportedException(crashreport);
-      }
-   }
+   // @Override
+   // public void clicked(int slotId, int button, ClickType clickType, Player player) {
+   //    try {
+   //       if (this.slots.get(slotId) instanceof GhostSlot) {
+   //          super.clicked(slotId, button, clickType, player);
+   //       } else {
+   //          super.clicked(slotId, button, clickType, player);
+   //       }
+   //    } catch (Exception exception) {
+   //       CrashReport crashreport = CrashReport.forThrowable(exception, "Container click");
+   //       CrashReportCategory crashreportcategory = crashreport.addCategory("Click info");
+   //       crashreportcategory.setDetail("Menu Class", () -> this.getClass().getCanonicalName());
+   //       crashreportcategory.setDetail("Slot Count", this.slots.size());
+   //       crashreportcategory.setDetail("Slot", slotId);
+   //       crashreportcategory.setDetail("Button", button);
+   //       crashreportcategory.setDetail("Type", clickType);
+   //       throw new ReportedException(crashreport);
+   //    }
+   // }
 
    public boolean stillValid(Player pPlayer) {
       return this.hopper.stillValid(pPlayer);

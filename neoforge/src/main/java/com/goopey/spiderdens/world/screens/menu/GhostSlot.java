@@ -34,9 +34,9 @@ public class GhostSlot extends Slot {
   // #############################################
 
   @Override
-  public ItemStack safeTake(int pCount, int pDecrement, Player pPlayer) {
-    Optional<ItemStack> optional = this.tryRemove(pCount, pDecrement, pPlayer);
-    optional.ifPresent(p_150655_ -> this.onTake(pPlayer, p_150655_));
+  public ItemStack safeTake(int count, int decrement, Player player) {
+    Optional<ItemStack> optional = this.tryRemove(count, decrement, player);
+    optional.ifPresent(itemStack -> this.onTake(player, itemStack));
     return optional.orElse(ItemStack.EMPTY);
   }
 
@@ -46,39 +46,25 @@ public class GhostSlot extends Slot {
   }
 
   @Override
-  public ItemStack safeInsert(ItemStack pStack, int pIncrement) {
-    if (!pStack.isEmpty() && this.mayPlace(pStack)) {
+  public ItemStack safeInsert(ItemStack stack, int increment) {
+    if (!stack.isEmpty() && this.mayPlace(stack)) {
         ItemStack itemstack = this.getItem();
         if (itemstack.isEmpty()) {
-            this.setByPlayer(pStack);
-        } else if (ItemStack.isSameItemSameComponents(itemstack, pStack)) {
-            this.setByPlayer(itemstack);
+            this.setByPlayer(stack.copyWithCount(1));
+        } else if (ItemStack.isSameItemSameComponents(itemstack, stack)) {
+            this.setChanged();
         }
 
-        return pStack;
+        return stack;
     } else {
-        return pStack;
+        return stack;
     }
   }
 
   @Override
   public Optional<ItemStack> tryRemove(int count, int decrement, Player player) {
-    if (!this.mayPickup(player)) {
-        return Optional.empty();
-    } else if (!this.allowModification(player) && decrement < this.getItem().getCount()) {
-        return Optional.empty();
-    } else {
-        ItemStack itemstack = this.remove(1);
-        
-        if (itemstack.isEmpty()) {
-          return Optional.empty();
-        } else {
-          if (this.getItem().isEmpty()) {
-            this.setByPlayer(ItemStack.EMPTY, itemstack);
-          }
-
-          return Optional.empty();
-        }
-    }
+    ItemStack itemStack = this.remove(1);
+    this.setByPlayer(ItemStack.EMPTY, itemStack);
+    return Optional.of(ItemStack.EMPTY);
   }
 }
