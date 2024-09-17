@@ -1,13 +1,18 @@
 package com.goopey.spiderdens.world.screens.menu;
 
+import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.core.init.MenuInit;
 
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -23,7 +28,7 @@ public class FilterHopperMenu extends AbstractContainerMenu {
    public FilterHopperMenu(int containerId, Inventory playerInventory, Container container) {
       super(MenuInit.FILTER_HOPPER_MENU.get(), containerId);
       this.hopper = container;
-      checkContainerSize(container, CONTAINER_SIZE);
+      checkContainerSize(container, CONTAINER_SIZE + FILTER_CONTAINER_SIZE);
       container.startOpen(playerInventory.player);
 
       // Hopper Inventory
@@ -32,9 +37,9 @@ public class FilterHopperMenu extends AbstractContainerMenu {
       }
 
       // Hopper Filter Inventory
-      for(int i = 0; i < 3; ++i) {
-         for(int k = 0; k < 9; ++k) {
-            this.addSlot(new GhostSlot(container, k + i * 9 + 9, 8 + k * 18, i * 18 + 38));
+      for(int i = 0; i < 3; i++) {
+         for(int k = 0; k < 9; k++) {
+            this.addSlot(new GhostSlot(container, k + i * 9 + CONTAINER_SIZE, 8 + k * 18, i * 18 + 38));
          }
       }
 
@@ -49,7 +54,26 @@ public class FilterHopperMenu extends AbstractContainerMenu {
       for(int i = 0; i < 9; ++i) {
          this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 161));
       }
+   }
 
+   @Override
+   public void clicked(int slotId, int button, ClickType clickType, Player player) {
+      try {
+         if (this.slots.get(slotId) instanceof GhostSlot) {
+            super.clicked(slotId, button, clickType, player);
+         } else {
+            super.clicked(slotId, button, clickType, player);
+         }
+      } catch (Exception exception) {
+         CrashReport crashreport = CrashReport.forThrowable(exception, "Container click");
+         CrashReportCategory crashreportcategory = crashreport.addCategory("Click info");
+         crashreportcategory.setDetail("Menu Class", () -> this.getClass().getCanonicalName());
+         crashreportcategory.setDetail("Slot Count", this.slots.size());
+         crashreportcategory.setDetail("Slot", slotId);
+         crashreportcategory.setDetail("Button", button);
+         crashreportcategory.setDetail("Type", clickType);
+         throw new ReportedException(crashreport);
+      }
    }
 
    public boolean stillValid(Player pPlayer) {
@@ -60,23 +84,25 @@ public class FilterHopperMenu extends AbstractContainerMenu {
       ItemStack itemstack = ItemStack.EMPTY;
       Slot slot = (Slot)this.slots.get(pIndex);
       
-      if (!(slot instanceof GhostSlot)) {
-         if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-            if (pIndex < this.hopper.getContainerSize()) {
-               if (!this.moveItemStackTo(itemstack1, this.hopper.getContainerSize(), this.slots.size(), true)) {
-                  return ItemStack.EMPTY;
-               }
-            } else if (!this.moveItemStackTo(itemstack1, 0, this.hopper.getContainerSize(), false)) {
+      // Remove items from filter.
+      if (slot instanceof GhostSlot) {
+         slot.setByPlayer(ItemStack.EMPTY);
+      // Do logic as per standard.
+      } else if (slot != null && slot.hasItem()) {
+         ItemStack itemstack1 = slot.getItem();
+         itemstack = itemstack1.copy();
+         if (pIndex < CONTAINER_SIZE) {
+            if (!this.moveItemStackTo(itemstack1, CONTAINER_SIZE, this.slots.size(), true)) {
                return ItemStack.EMPTY;
             }
+         } else if (!this.moveItemStackTo(itemstack1, 0, CONTAINER_SIZE, false)) {
+            return ItemStack.EMPTY;
+         }
 
-            if (itemstack1.isEmpty()) {
-               slot.setByPlayer(ItemStack.EMPTY);
-            } else {
-               slot.setChanged();
-            }
+         if (itemstack1.isEmpty()) {
+            slot.setByPlayer(ItemStack.EMPTY);
+         } else {
+            slot.setChanged();
          }
       }
 

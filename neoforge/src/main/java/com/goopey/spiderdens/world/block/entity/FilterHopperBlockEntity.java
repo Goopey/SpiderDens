@@ -44,7 +44,6 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
    public static final int HOPPER_FILTER_SIZE = 27;
    private static final int[][] CACHED_SLOTS = new int[54][];
    private NonNullList<ItemStack> items;
-   private NonNullList<ItemStack> filterItems;
    private int cooldownTime;
    // This stuff is used, but only by the parent class, so we need to keep it.
    @SuppressWarnings("unused")
@@ -53,29 +52,16 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
 
    public FilterHopperBlockEntity(BlockPos pos, BlockState blockState) {
       super(pos, blockState);
-      this.items = NonNullList.withSize(HOPPER_CONTAINER_SIZE, ItemStack.EMPTY);
-      this.filterItems = NonNullList.withSize(HOPPER_FILTER_SIZE, ItemStack.EMPTY);
+      this.items = NonNullList.withSize(HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE, ItemStack.EMPTY);
       this.cooldownTime = -1;
       this.facing = (Direction)blockState.getValue(FilterHopper.FACING);
    }
 
    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
       super.loadAdditional(pTag, pRegistries);
-      this.items = NonNullList.withSize(HOPPER_CONTAINER_SIZE, ItemStack.EMPTY);
-      this.filterItems = NonNullList.withSize(HOPPER_FILTER_SIZE, ItemStack.EMPTY);
+      this.items = NonNullList.withSize(HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE, ItemStack.EMPTY);
       if (!this.tryLoadLootTable(pTag)) {
-         NonNullList<ItemStack> allItems = NonNullList.withSize(HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE, ItemStack.EMPTY);
-         ContainerHelper.loadAllItems(pTag, allItems, pRegistries);
-
-         for (int i = 0; i < HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE; i++) {
-            if (i < HOPPER_CONTAINER_SIZE) {
-               // Set Hopper Inventory stuff
-               this.items.set(i, allItems.get(i));
-            } else {
-               // Set Filter Items stuff
-               this.filterItems.set(i - HOPPER_CONTAINER_SIZE, allItems.get(i));
-            }
-         }
+         ContainerHelper.loadAllItems(pTag, this.items, pRegistries);
       }
 
       this.cooldownTime = pTag.getInt("TransferCooldown");
@@ -84,12 +70,7 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
       super.saveAdditional(pTag, pRegistries);
       if (!this.trySaveLootTable(pTag)) {
-         NonNullList<ItemStack> allItems = NonNullList.copyOf(this.items);
-         for (ItemStack item : this.filterItems) {
-            allItems.add(item);
-         }
-
-         ContainerHelper.saveAllItems(pTag, allItems, pRegistries);
+         ContainerHelper.saveAllItems(pTag, this.items, pRegistries);
       }
 
       pTag.putInt("TransferCooldown", this.cooldownTime);
@@ -254,7 +235,7 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
             if (isFullContainer(container, direction)) {
                return false;
             } else {
-               for(int i = 0; i < blockEntity.getContainerSize(); ++i) {
+               for(int i = 0; i < blockEntity.getHopperSize(); ++i) {
                   ItemStack itemstack = blockEntity.getItem(i);
                   if (!itemstack.isEmpty()) {
                      if (checkMatch(itemstack, blockEntity.getFilterItems())) {
@@ -405,6 +386,10 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       return HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE;
    }
 
+   public int getHopperSize() {
+      return HOPPER_CONTAINER_SIZE;
+   }
+
    @Override
    public double getLevelX() {
       return (double)this.worldPosition.getX() + 0.5;
@@ -440,7 +425,13 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
    }
 
    protected NonNullList<ItemStack> getFilterItems() {
-      return this.filterItems;
+      NonNullList<ItemStack> filterItems = NonNullList.withSize(HOPPER_FILTER_SIZE, ItemStack.EMPTY);
+      
+      for (int i = HOPPER_CONTAINER_SIZE; i < HOPPER_FILTER_SIZE + HOPPER_CONTAINER_SIZE; i++) {
+         filterItems.set(i, this.items.get(i));
+      }
+
+      return filterItems;
    }
 
    @Override
