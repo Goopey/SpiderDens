@@ -1,22 +1,17 @@
 package com.goopey.spiderdens.world.screens.menu;
 
-import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.core.init.MenuInit;
 
-import net.minecraft.CrashReport;
-import net.minecraft.CrashReportCategory;
-import net.minecraft.ReportedException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class FilterHopperMenu extends AbstractContainerMenu {
+public class FilterHopperMenu extends AbstractGhostContainerMenu {
    public static final int CONTAINER_SIZE = 5;
    public static final int FILTER_CONTAINER_SIZE = 27;
    private final Container hopper;
@@ -56,25 +51,10 @@ public class FilterHopperMenu extends AbstractContainerMenu {
       }
    }
 
-   // @Override
-   // public void clicked(int slotId, int button, ClickType clickType, Player player) {
-   //    try {
-   //       if (this.slots.get(slotId) instanceof GhostSlot) {
-   //          super.clicked(slotId, button, clickType, player);
-   //       } else {
-   //          super.clicked(slotId, button, clickType, player);
-   //       }
-   //    } catch (Exception exception) {
-   //       CrashReport crashreport = CrashReport.forThrowable(exception, "Container click");
-   //       CrashReportCategory crashreportcategory = crashreport.addCategory("Click info");
-   //       crashreportcategory.setDetail("Menu Class", () -> this.getClass().getCanonicalName());
-   //       crashreportcategory.setDetail("Slot Count", this.slots.size());
-   //       crashreportcategory.setDetail("Slot", slotId);
-   //       crashreportcategory.setDetail("Button", button);
-   //       crashreportcategory.setDetail("Type", clickType);
-   //       throw new ReportedException(crashreport);
-   //    }
-   // }
+   @Override
+   public void clicked(int slotId, int button, ClickType clickType, Player player) {
+      super.clicked(slotId, button, clickType, player);
+   }
 
    public boolean stillValid(Player pPlayer) {
       return this.hopper.stillValid(pPlayer);

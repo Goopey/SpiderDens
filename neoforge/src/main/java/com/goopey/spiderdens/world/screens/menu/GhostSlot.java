@@ -34,6 +34,11 @@ public class GhostSlot extends Slot {
   // #############################################
 
   @Override
+  public void onQuickCraft(ItemStack oldStack, ItemStack newStack) {
+    
+  }
+
+  @Override
   public ItemStack safeTake(int count, int decrement, Player player) {
     Optional<ItemStack> optional = this.tryRemove(count, decrement, player);
     optional.ifPresent(itemStack -> this.onTake(player, itemStack));
