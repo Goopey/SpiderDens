@@ -18,10 +18,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class AbstractGhostContainerMenu extends AbstractContainerMenu {
-  public int quickcraftType = -1;
-  public int quickcraftStatus;
-  public final Set<Slot> quickcraftSlots = Sets.newHashSet();
-
   public AbstractGhostContainerMenu(MenuType<?> pMenuType, int pContainerId) {
     super(pMenuType, pContainerId);
   }
