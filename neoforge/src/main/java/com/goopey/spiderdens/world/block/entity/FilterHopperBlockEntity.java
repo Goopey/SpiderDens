@@ -1,6 +1,7 @@
 package com.goopey.spiderdens.world.block.entity;
 
 import com.goopey.spiderdens.core.init.BlockEntityInit;
+import com.goopey.spiderdens.util.FilterHopperCodeHooks;
 import com.goopey.spiderdens.world.block.FilterHopper;
 import com.goopey.spiderdens.world.screens.menu.FilterHopperMenu;
 
@@ -35,7 +36,6 @@ import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.VanillaInventoryCodeHooks;
 
 public class FilterHopperBlockEntity extends HopperBlockEntity {
    public static final int MOVE_ITEM_SPEED = 8;
@@ -57,44 +57,44 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       this.facing = (Direction)blockState.getValue(FilterHopper.FACING);
    }
 
-   protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-      super.loadAdditional(pTag, pRegistries);
+   protected void loadAdditional(CompoundTag tag, HolderLookup.Provider regisitries) {
+      super.loadAdditional(tag, regisitries);
       this.items = NonNullList.withSize(HOPPER_CONTAINER_SIZE + HOPPER_FILTER_SIZE, ItemStack.EMPTY);
-      if (!this.tryLoadLootTable(pTag)) {
-         ContainerHelper.loadAllItems(pTag, this.items, pRegistries);
+      if (!this.tryLoadLootTable(tag)) {
+         ContainerHelper.loadAllItems(tag, this.items, regisitries);
       }
 
-      this.cooldownTime = pTag.getInt("TransferCooldown");
+      this.cooldownTime = tag.getInt("TransferCooldown");
    }
 
-   protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-      super.saveAdditional(pTag, pRegistries);
-      if (!this.trySaveLootTable(pTag)) {
-         ContainerHelper.saveAllItems(pTag, this.items, pRegistries);
+   protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+      super.saveAdditional(tag, registries);
+      if (!this.trySaveLootTable(tag)) {
+         ContainerHelper.saveAllItems(tag, this.items, registries);
       }
 
-      pTag.putInt("TransferCooldown", this.cooldownTime);
+      tag.putInt("TransferCooldown", this.cooldownTime);
    }
 
    //####################################################
    //                  FILTER HOPPER
    //####################################################
 
-   public static void filterPushItemsTick(Level pLevel, BlockPos pPos, BlockState pState, FilterHopperBlockEntity blockEntity) {
+   public static void filterPushItemsTick(Level level, BlockPos pos, BlockState state, FilterHopperBlockEntity blockEntity) {
       --blockEntity.cooldownTime;
-      blockEntity.tickedGameTime = pLevel.getGameTime();
+      blockEntity.tickedGameTime = level.getGameTime();
       if (!blockEntity.isOnCooldown()) {
          blockEntity.setCooldown(0);
-         tryMoveItems(pLevel, pPos, pState, blockEntity, () -> {
-            return filterSuckInItems(pLevel, blockEntity);
+         tryMoveItems(level, pos, state, blockEntity, () -> {
+            return filterSuckInItems(level, blockEntity);
          });
       }
    }
 
-   public static void filterEntityInside(Level pLevel, BlockPos pPos, BlockState blockState, Entity pEntity, FilterHopperBlockEntity blockEntity) {
-      if (pEntity instanceof ItemEntity itementity) {
-         if (!itementity.getItem().isEmpty() && pEntity.getBoundingBox().move((double)(-pPos.getX()), (double)(-pPos.getY()), (double)(-pPos.getZ())).intersects(blockEntity.getSuckAabb())) {
-               tryMoveItems(pLevel, pPos, blockState, blockEntity, () -> {
+   public static void filterEntityInside(Level level, BlockPos pos, BlockState blockState, Entity entity, FilterHopperBlockEntity blockEntity) {
+      if (entity instanceof ItemEntity itementity) {
+         if (!itementity.getItem().isEmpty() && entity.getBoundingBox().move((double)(-pos.getX()), (double)(-pos.getY()), (double)(-pos.getZ())).intersects(blockEntity.getSuckAabb())) {
+               tryMoveItems(level, pos, blockState, blockEntity, () -> {
                   if (checkMatch(itementity.getItem(), blockEntity.getFilterItems())) {
                      return addItem(blockEntity, itementity);
                   }
@@ -105,7 +105,11 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       }
    }
 
-   private static boolean checkMatch(ItemStack item, NonNullList<ItemStack> filterItems) {
+   //#########################################
+   //             FILTER HELPER
+   //#########################################
+
+   public static boolean checkMatch(ItemStack item, NonNullList<ItemStack> filterItems) {
       for (ItemStack filterItem : filterItems) {
          if (item.getItem().equals(filterItem.getItem())) {
             return true;
@@ -115,24 +119,24 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       return false;
    }
 
-   //###################################################
-   //                   HOPPER
-   //###################################################
+   //#######################################################
+   //                   HOPPER MOVING
+   //#######################################################
 
-   public static boolean filterSuckInItems(Level pLevel, FilterHopperBlockEntity blockEntity) {
+   public static boolean filterSuckInItems(Level level, FilterHopperBlockEntity blockEntity) {
       BlockPos blockpos = BlockPos.containing(blockEntity.getLevelX(), blockEntity.getLevelY() + 1.0, blockEntity.getLevelZ());
-      BlockState blockstate = pLevel.getBlockState(blockpos);
-      Boolean ret = VanillaInventoryCodeHooks.extractHook(pLevel, blockEntity);
+      BlockState blockstate = level.getBlockState(blockpos);
+
+      Boolean ret = FilterHopperCodeHooks.extractHook(level, blockEntity, blockEntity);
       if (ret != null) {
          return ret;
       } else {
-         Container container = getSourceContainer(pLevel, blockEntity, blockpos, blockstate);
+         Container container = getSourceContainer(level, blockEntity, blockpos, blockstate);
          if (container != null) {
             Direction direction = Direction.DOWN;
             int[] var12 = getSlots(container, direction);
-            int var13 = var12.length;
 
-            for(int var9 = 0; var9 < var13; ++var9) {
+            for(int var9 = 0; var9 < blockEntity.getHopperSize(); ++var9) {
                int i = var12[var9];
                if (tryTakeInItemFromSlot(blockEntity, container, i, direction)) {
                   return true;
@@ -141,9 +145,9 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
 
             return false;
          } else {
-            boolean flag = blockEntity.isGridAligned() && blockstate.isCollisionShapeFullBlock(pLevel, blockpos) && !blockstate.is(BlockTags.DOES_NOT_BLOCK_HOPPERS);
+            boolean flag = blockEntity.isGridAligned() && blockstate.isCollisionShapeFullBlock(level, blockpos) && !blockstate.is(BlockTags.DOES_NOT_BLOCK_HOPPERS);
             if (!flag) {
-               Iterator<ItemEntity> var7 = getItemsAtAndAbove(pLevel, blockEntity).iterator();
+               Iterator<ItemEntity> var7 = getItemsAtAndAbove(level, blockEntity).iterator();
 
                while(var7.hasNext()) {
                   ItemEntity itementity = (ItemEntity)var7.next();
@@ -162,20 +166,20 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       }
    }
 
-   private static boolean tryTakeInItemFromSlot(FilterHopperBlockEntity pHopper, Container pContainer, int pSlot, Direction pDirection) {
-      ItemStack itemstack = pContainer.getItem(pSlot);
-      if (!itemstack.isEmpty() && canTakeItemFromContainer(pHopper, pContainer, itemstack, pSlot, pDirection)) {
-         if (checkMatch(itemstack, pHopper.getFilterItems())) {
+   private static boolean tryTakeInItemFromSlot(FilterHopperBlockEntity blockEntity, Container container, int slotId, Direction direction) {
+      ItemStack itemstack = container.getItem(slotId);
+      if (!itemstack.isEmpty() && canTakeItemFromContainer(blockEntity, container, itemstack, slotId, direction)) {
+         if (checkMatch(itemstack, blockEntity.getFilterItems())) {
             int i = itemstack.getCount();
-            ItemStack itemstack1 = addItem(pContainer, pHopper, pContainer.removeItem(pSlot, 1), (Direction)null);
+            ItemStack itemstack1 = addItem(container, blockEntity, container.removeItem(slotId, 1), (Direction)null);
             if (itemstack1.isEmpty()) {
-               pContainer.setChanged();
+               container.setChanged();
                return true;
             }
             
             itemstack.setCount(i);
             if (i == 1) {
-               pContainer.setItem(pSlot, itemstack);
+               container.setItem(slotId, itemstack);
             }
          }
       }
@@ -198,22 +202,22 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       }
    }
 
-   private static boolean tryMoveItems(Level pLevel, BlockPos pPos, BlockState pState, FilterHopperBlockEntity blockEntity, BooleanSupplier pValidator) {
-      if (!pLevel.isClientSide) {
-         if (!blockEntity.isOnCooldown() && (Boolean)pState.getValue(FilterHopper.ENABLED)) {
+   private static boolean tryMoveItems(Level level, BlockPos pos, BlockState blockState, FilterHopperBlockEntity blockEntity, BooleanSupplier validator) {
+      if (!level.isClientSide) {
+         if (!blockEntity.isOnCooldown() && (Boolean)blockState.getValue(FilterHopper.ENABLED)) {
             boolean flag = false;
       
             if (!blockEntity.isEmpty()) {
-               flag = ejectItems(pLevel, pPos, blockEntity);
+               flag = ejectItems(level, pos, blockEntity);
             }
 
             if (!blockEntity.inventoryFull()) {
-               flag |= pValidator.getAsBoolean();
+               flag |= validator.getAsBoolean();
             }
 
             if (flag) {
                blockEntity.setCooldown(8);
-               setChanged(pLevel, pPos, pState);
+               setChanged(level, pos, blockState);
       
                return true;
             }
@@ -224,7 +228,7 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
    }
 
    private static boolean ejectItems(Level pLevel, BlockPos pPos, FilterHopperBlockEntity blockEntity) {
-      if (VanillaInventoryCodeHooks.insertHook(blockEntity)) {
+      if (FilterHopperCodeHooks.insertHook(blockEntity)) {
          return true;
       } else {
          Container container = getAttachedContainer(pLevel, pPos, blockEntity);
@@ -249,7 +253,7 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
                         itemstack.setCount(j);
                         if (j == 1) {
                            blockEntity.setItem(i, itemstack);
-                        }
+                        } 
                      }
                   }
                }
@@ -260,14 +264,18 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       }
    }
 
-   private static boolean isFullContainer(Container pContainer, Direction pDirection) {
-      int[] aint = getSlots(pContainer, pDirection);
+   //#################################################
+   //             SLOTS/INVENTORY HELPER
+   //#################################################
+
+   private static boolean isFullContainer(Container container, Direction direction) {
+      int[] aint = getSlots(container, direction);
       int[] var3 = aint;
       int var4 = aint.length;
 
       for(int var5 = 0; var5 < var4; ++var5) {
          int i = var3[var5];
-         ItemStack itemstack = pContainer.getItem(i);
+         ItemStack itemstack = container.getItem(i);
          if (itemstack.getCount() < itemstack.getMaxStackSize()) {
             return false;
          }
@@ -276,11 +284,11 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       return true;
    }
 
-   private static int[] getSlots(Container pContainer, Direction pDirection) {
-      if (pContainer instanceof WorldlyContainer worldlycontainer) {
-         return worldlycontainer.getSlotsForFace(pDirection);
+   private static int[] getSlots(Container container, Direction direction) {
+      if (container instanceof WorldlyContainer worldlycontainer) {
+         return worldlycontainer.getSlotsForFace(direction);
       } else {
-         int i = pContainer.getContainerSize();
+         int i = container.getContainerSize();
          if (i < CACHED_SLOTS.length) {
             int[] aint = CACHED_SLOTS[i];
             if (aint != null) {
@@ -296,8 +304,8 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       }
    }
 
-   private static int[] createFlatSlots(int pSize) {
-      int[] aint = new int[pSize];
+   private static int[] createFlatSlots(int size) {
+      int[] aint = new int[size];
 
       for(int i = 0; i < aint.length; aint[i] = i++);
 
@@ -305,7 +313,8 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
    }
 
    private boolean inventoryFull() {
-      Iterator<ItemStack> var1 = this.items.iterator();
+      NonNullList<ItemStack> itemList = NonNullList.copyOf(this.items.subList(0, this.getHopperSize()));
+      Iterator<ItemStack> var1 = itemList.iterator();
 
       ItemStack itemstack;
       do {
@@ -318,6 +327,10 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
 
       return false;
    }
+
+   //####################################################
+   //             GETTING CONTAINER STUFF
+   //####################################################
 
    @Nullable
    private static Container getAttachedContainer(Level pLevel, BlockPos pPos, FilterHopperBlockEntity blockEntity) {
@@ -367,10 +380,6 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       return !list.isEmpty() ? (Container)list.get(pLevel.random.nextInt(list.size())) : null;
    }
 
-   private boolean isOnCooldown() {
-      return this.cooldownTime > 0;
-   }
-
   //#################################################
   //                 BLOCK ENTITY
   //#################################################
@@ -410,8 +419,12 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       return true;
    }
 
+   private boolean isOnCooldown() {
+      return this.cooldownTime > 0;
+   }
+
    //##############################################
-   //                CONTAINERS
+   //                MENU + ITEMS
    //##############################################
 
    @Override
@@ -424,11 +437,11 @@ public class FilterHopperBlockEntity extends HopperBlockEntity {
       return this.items;
    }
 
-   protected NonNullList<ItemStack> getFilterItems() {
+   public NonNullList<ItemStack> getFilterItems() {
       NonNullList<ItemStack> filterItems = NonNullList.withSize(HOPPER_FILTER_SIZE, ItemStack.EMPTY);
       
       for (int i = HOPPER_CONTAINER_SIZE; i < HOPPER_FILTER_SIZE + HOPPER_CONTAINER_SIZE; i++) {
-         filterItems.set(i, this.items.get(i));
+         filterItems.set(i - HOPPER_CONTAINER_SIZE, this.items.get(i));
       }
 
       return filterItems;
