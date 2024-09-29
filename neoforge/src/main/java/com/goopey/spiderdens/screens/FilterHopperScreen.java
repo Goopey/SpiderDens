@@ -1,7 +1,7 @@
-package com.goopey.spiderdens.world.screens;
+package com.goopey.spiderdens.screens;
 
 import com.goopey.spiderdens.SpiderDens;
-import com.goopey.spiderdens.world.screens.menu.FilterHopperMenu;
+import com.goopey.spiderdens.screens.menu.FilterHopperMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

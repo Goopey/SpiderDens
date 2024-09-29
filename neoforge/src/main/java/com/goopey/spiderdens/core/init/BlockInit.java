@@ -3,7 +3,7 @@ package com.goopey.spiderdens.core.init;
 import java.util.function.Supplier;
 
 import com.goopey.spiderdens.SpiderDens;
-import com.goopey.spiderdens.world.block.FilterHopper;
+import com.goopey.spiderdens.block.FilterHopper;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

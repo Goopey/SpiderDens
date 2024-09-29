@@ -1,4 +1,4 @@
-package com.goopey.spiderdens.world.screens.menu;
+package com.goopey.spiderdens.screens.menu;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;

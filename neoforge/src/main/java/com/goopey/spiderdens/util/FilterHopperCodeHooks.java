@@ -8,8 +8,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 
-import com.goopey.spiderdens.world.block.FilterHopper;
-import com.goopey.spiderdens.world.block.entity.FilterHopperBlockEntity;
+import com.goopey.spiderdens.block.FilterHopper;
+import com.goopey.spiderdens.block.entity.FilterHopperBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

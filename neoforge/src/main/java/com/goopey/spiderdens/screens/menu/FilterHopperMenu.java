@@ -1,4 +1,4 @@
-package com.goopey.spiderdens.world.screens.menu;
+package com.goopey.spiderdens.screens.menu;
 
 import com.goopey.spiderdens.core.init.MenuInit;
 

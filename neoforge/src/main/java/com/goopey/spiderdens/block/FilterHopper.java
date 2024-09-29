@@ -1,7 +1,7 @@
-package com.goopey.spiderdens.world.block;
+package com.goopey.spiderdens.block;
 
+import com.goopey.spiderdens.block.entity.FilterHopperBlockEntity;
 import com.goopey.spiderdens.core.init.BlockEntityInit;
-import com.goopey.spiderdens.world.block.entity.FilterHopperBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;

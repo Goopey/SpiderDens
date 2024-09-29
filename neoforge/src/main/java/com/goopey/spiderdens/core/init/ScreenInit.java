@@ -1,6 +1,6 @@
 package com.goopey.spiderdens.core.init;
 
-import com.goopey.spiderdens.world.screens.FilterHopperScreen;
+import com.goopey.spiderdens.screens.FilterHopperScreen;
 
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
