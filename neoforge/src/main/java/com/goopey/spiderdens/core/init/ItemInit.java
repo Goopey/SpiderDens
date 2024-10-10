@@ -20,8 +20,8 @@ public class ItemInit {
   public static final Supplier<DeferredSpawnEggItem> RED_SPIDER_EGG = ITEMS.register("spawnegg_red_spider", 
     () -> new DeferredSpawnEggItem(
       EntityInit.RED_SPIDER,
-      667755, 
-      221100, 
+      -10081750, 
+      -2943723, 
       new Item.Properties())
   );
 }
