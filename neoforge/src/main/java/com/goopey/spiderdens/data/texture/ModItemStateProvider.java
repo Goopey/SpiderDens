@@ -8,6 +8,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ModItemStateProvider extends ItemModelProvider {
@@ -17,13 +18,20 @@ public class ModItemStateProvider extends ItemModelProvider {
 
   @Override
   protected void registerModels() {
-    item(ItemInit.EXAMPLE_ITEM.get());
+    itemBuilder(ItemInit.EXAMPLE_ITEM.get());
+    eggItemBuilder(ItemInit.RED_SPIDER_EGG.get());
   }
 
-  private void item(Item item) {
+  private void itemBuilder(Item item) {
     String name = NameUtility.getItemName(item);
     getBuilder(name)
       .parent(getExistingFile(mcLoc("item/generated")))
       .texture("layer0", "item/" + name);
+  }
+
+  private void eggItemBuilder(DeferredSpawnEggItem eggItem) {
+    String name = NameUtility.getItemName(eggItem);
+    getBuilder(name)
+      .parent(getExistingFile(mcLoc("item/template_spawn_egg")));
   }
 }
