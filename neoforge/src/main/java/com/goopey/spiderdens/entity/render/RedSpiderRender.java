@@ -46,6 +46,7 @@ public class RedSpiderRender<T extends RedSpider> extends MobRenderer<T, RedSpid
 			}
     });
     this.addLayer(new RenderLayer<T,RedSpiderModel<T>>(this) {
+      // FIXME : make layer not glow in the dark.
       @SuppressWarnings({ "unchecked", "rawtypes", "null" })
       @Override
       public void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
