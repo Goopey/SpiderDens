@@ -23,9 +23,9 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class RedSpiderRender<T extends RedSpider> extends MobRenderer<T, RedSpiderModel<T>> {
-  private static final ResourceLocation RED_SPIDER_TEXTURE = new ResourceLocation(SpiderDens.MOD_ID, "textures/entity/red_spider.png");
-  private static final ResourceLocation RED_SPIDER_EYE_TEXTURE = new ResourceLocation(SpiderDens.MOD_ID, "textures/entity/red_spider_eyes.png");
-  private static final ResourceLocation RED_SPIDER_HAIR_TEXTURE = new ResourceLocation(SpiderDens.MOD_ID, "textures/entity/red_spider_hair.png");
+  private static final ResourceLocation RED_SPIDER_TEXTURE = ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, "textures/entity/red_spider.png");
+  private static final ResourceLocation RED_SPIDER_EYE_TEXTURE = ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, "textures/entity/red_spider_eyes.png");
+  private static final ResourceLocation RED_SPIDER_HAIR_TEXTURE = ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, "textures/entity/red_spider_hair.png");
 
   public RedSpiderRender(EntityRendererProvider.Context renderManagerIn) {
 		super(renderManagerIn, new RedSpiderModel<>(renderManagerIn.bakeLayer(ModelLayers.RED_SPIDER)), 0.5F);
@@ -42,7 +42,7 @@ public class RedSpiderRender<T extends RedSpider> extends MobRenderer<T, RedSpid
 				this.getParentModel().copyPropertiesTo(model);
 				model.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
 				model.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-				model.renderToBuffer(poseStack, vertexConsumer, 15728640, LivingEntityRenderer.getOverlayCoords(entity, 0), 1, 1, 1, 1);
+				model.renderToBuffer(poseStack, vertexConsumer, 15728640, LivingEntityRenderer.getOverlayCoords(entity, 0));
 			}
     });
     this.addLayer(new RenderLayer<T,RedSpiderModel<T>>(this) {
@@ -60,7 +60,7 @@ public class RedSpiderRender<T extends RedSpider> extends MobRenderer<T, RedSpid
         this.getParentModel().copyPropertiesTo(entityModel);
 				entityModel.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
 				entityModel.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-				entityModel.renderToBuffer(poseStack, vertexConsumer, 15728640, LivingEntityRenderer.getOverlayCoords(entity, 0), 1, 1, 1, 1);
+				entityModel.renderToBuffer(poseStack, vertexConsumer, 15728640, LivingEntityRenderer.getOverlayCoords(entity, 0));
 			}
     });
   }

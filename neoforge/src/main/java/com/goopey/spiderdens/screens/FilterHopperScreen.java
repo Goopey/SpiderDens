@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FilterHopperScreen extends AbstractContainerScreen<FilterHopperMenu> {
-  private static final ResourceLocation CONTAINER_BACKGROUND = new ResourceLocation(SpiderDens.MOD_ID, "textures/gui/container/filter_screen.png");
+  private static final ResourceLocation CONTAINER_BACKGROUND = ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, "textures/gui/container/filter_screen.png");
 
   public FilterHopperScreen(FilterHopperMenu menu, Inventory playerInventory, Component title) {
     super(menu, playerInventory, title);
