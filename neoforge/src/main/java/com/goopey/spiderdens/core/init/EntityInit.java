@@ -22,7 +22,7 @@ public class EntityInit {
   public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, SpiderDens.MOD_ID);
 
   public static final Supplier<EntityType<RedSpider>> RED_SPIDER = ENTITIES.register("red_spider", () -> 
-    EntityType.Builder.of(RedSpider::new, MobCategory.MONSTER).sized(0.6F, 1.95F).clientTrackingRange(8).build(prefix("red_spider"))
+    EntityType.Builder.of(RedSpider::new, MobCategory.MONSTER).fireImmune().sized(1.5F, 0.9F).clientTrackingRange(8).build(prefix("red_spider"))
   );
 
   private static String prefix(String path) {
