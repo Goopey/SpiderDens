@@ -30,6 +30,6 @@ public class ModENLangProvider extends LanguageProvider {
   }
 
   private void creativeTabs() {
-    add(CreativeModeTabInit.SPIDER_DENS_TAB_TITLE, "Spider Dens");    
+    add(CreativeModeTabInit.SPIDER_DENS_TAB_TITLE, "Spider Dens");
   }
 }
