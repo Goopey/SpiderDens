@@ -7,4 +7,5 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ModelLayers {
   public static ModelLayerLocation RED_SPIDER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, "red_spider"), "main"); 
+  public static ModelLayerLocation HELL_SPIDER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, "hell_spider"), "main"); 
 }

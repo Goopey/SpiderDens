@@ -2,8 +2,10 @@ package com.goopey.spiderdens.core.init;
 
 import com.goopey.spiderdens.SpiderDens;
 import com.goopey.spiderdens.core.ModelLayers;
+import com.goopey.spiderdens.entity.model.HellSpiderModel;
 import com.goopey.spiderdens.entity.model.RedSpiderModel;
 import com.goopey.spiderdens.entity.render.RedSpiderRender;
+import com.goopey.spiderdens.entity.render.HellSpiderRender;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -17,10 +19,12 @@ public class RenderInit {
   @SubscribeEvent 
   public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
     event.registerEntityRenderer(EntityInit.RED_SPIDER.get(), RedSpiderRender::new);
+    event.registerEntityRenderer(EntityInit.HELL_SPIDER.get(), HellSpiderRender::new);
   }
 
   @SubscribeEvent
   public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
     event.registerLayerDefinition(ModelLayers.RED_SPIDER, RedSpiderModel::createSpiderBodyLayer);
+    event.registerLayerDefinition(ModelLayers.HELL_SPIDER, HellSpiderModel::createSpiderBodyLayer);
   }
 }
