@@ -23,6 +23,7 @@ public class ModENLangProvider extends LanguageProvider {
   private void items() {
     addItem(ItemInit.EXAMPLE_ITEM, "Example Item");
     addItem(ItemInit.RED_SPIDER_EGG, "Red Spider Spawn Egg");
+    addItem(ItemInit.HELL_SPIDER_EGG, "Hell Spider Spawn Egg");
   }
 
   private void blocks() {

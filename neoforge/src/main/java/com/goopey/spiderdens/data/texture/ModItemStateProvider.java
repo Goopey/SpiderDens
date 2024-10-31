@@ -20,6 +20,7 @@ public class ModItemStateProvider extends ItemModelProvider {
   protected void registerModels() {
     itemBuilder(ItemInit.EXAMPLE_ITEM.get());
     eggItemBuilder(ItemInit.RED_SPIDER_EGG.get());
+    eggItemBuilder(ItemInit.HELL_SPIDER_EGG.get());
   }
 
   private void itemBuilder(Item item) {

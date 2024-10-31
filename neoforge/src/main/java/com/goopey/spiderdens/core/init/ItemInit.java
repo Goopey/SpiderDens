@@ -24,4 +24,12 @@ public class ItemInit {
       -2943723, 
       new Item.Properties())
   );
+
+  public static final Supplier<DeferredSpawnEggItem> HELL_SPIDER_EGG = ITEMS.register("spawnegg_hell_spider", 
+    () -> new DeferredSpawnEggItem(
+      EntityInit.HELL_SPIDER,
+      -3407872, 
+      -12779520,
+      new Item.Properties())
+  );
 }

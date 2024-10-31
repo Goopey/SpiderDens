@@ -11,6 +11,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -46,13 +47,12 @@ public class RedSpiderRender<T extends RedSpider> extends MobRenderer<T, RedSpid
 			}
     });
     this.addLayer(new RenderLayer<T,RedSpiderModel<T>>(this) {
-      // FIXME : make layer not glow in the dark.
       @SuppressWarnings({ "unchecked", "rawtypes", "null" })
       @Override
       public void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(RED_SPIDER_HAIR_TEXTURE));
         
-        var model = Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.RED_SPIDER);
+        ModelPart model = Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.RED_SPIDER);
         model.offsetScale(new Vector3f(.05f, .05f, .05f));
         model.y -= 0.5f;
 
@@ -60,7 +60,7 @@ public class RedSpiderRender<T extends RedSpider> extends MobRenderer<T, RedSpid
         this.getParentModel().copyPropertiesTo(entityModel);
 				entityModel.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
 				entityModel.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-				entityModel.renderToBuffer(poseStack, vertexConsumer, 15728640, LivingEntityRenderer.getOverlayCoords(entity, 0));
+				entityModel.renderToBuffer(poseStack, vertexConsumer, light, LivingEntityRenderer.getOverlayCoords(entity, 0));
 			}
     });
   }
