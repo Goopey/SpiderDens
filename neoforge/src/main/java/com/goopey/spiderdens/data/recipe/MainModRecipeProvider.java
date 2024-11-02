@@ -30,6 +30,6 @@ public class MainModRecipeProvider extends RecipeProvider {
     }
 
     public ResourceLocation getModId(String path) {
-        return new ResourceLocation(SpiderDens.MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, path);
     }
 }

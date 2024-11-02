@@ -35,9 +35,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(TagsInit.BlockTagsInit.STORAGE_BLOCKS_SPIDERDENS)
           .add(BlockInit.FILTER_HOPPER.get());
 
-        TagKey<Block> goldTags = createForgeTag("forge:needs_gold_tool");
-        TagKey<Block> netheriteTags = createForgeTag("forge:needs_netherite_tool");
-        TagKey<Block> woodTags = createForgeTag("forge:needs_wood_tool");
+        TagKey<Block> goldTags = createForgeTag("forge", "needs_gold_tool");
+        TagKey<Block> netheriteTags = createForgeTag("forge", "needs_netherite_tool");
+        TagKey<Block> woodTags = createForgeTag("forge", "needs_wood_tool");
 
         tag(woodTags);
 
@@ -49,7 +49,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
           .add(BlockInit.FILTER_HOPPER.get());
     }
 
-    private static TagKey<Block> createForgeTag(String name) {
-        return BlockTags.create(new ResourceLocation(name));
+    private static TagKey<Block> createForgeTag(String namespace, String name) {
+        return BlockTags.create(ResourceLocation.fromNamespaceAndPath(namespace, name));
     }
 }

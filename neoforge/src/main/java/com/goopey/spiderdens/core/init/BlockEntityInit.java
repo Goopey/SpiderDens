@@ -13,5 +13,4 @@ public class BlockEntityInit {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FilterHopperBlockEntity>> FILTER_HOPPER_TILEENTITY = 
         BLOCK_ENTITY.register("filter_hopper", () -> BlockEntityType.Builder.of(FilterHopperBlockEntity::new, BlockInit.FILTER_HOPPER.get()).build(null));
-
 }

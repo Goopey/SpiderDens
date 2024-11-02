@@ -39,7 +39,10 @@ A small Minecraft mod which adds nomadic spider spawners to the game named Spide
 * Armored Spiders (resistant to melee attacks, anvils, fall damage)
 * Blessed Spiders (apply buffs to spiders near them like regeneration + strength, invisibility or speed)
 * Black Recluses (bigger cave spiders that apply Wither)
-* Behemoths (very large spiders with tons of health and armor, also come in red, blue and yellow)
+* Behemoths (very large spiders with tons of health and armor)
+* Red Behemoth (see above)
+* Blue Behemoth (see above)
+* Yellow Behemoth (see above)
 * Wolfspiders (larger, hairy spiders which can sneak and lunge at their targets)
 * Red Wolfspiders (larger, red-haired spiders which can sneak and shoot many poisonous bolts at their targets)
 

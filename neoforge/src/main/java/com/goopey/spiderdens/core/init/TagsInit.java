@@ -25,11 +25,11 @@ public class TagsInit {
 
 
       private static ResourceLocation createResourceLocation(String name) {
-          return new ResourceLocation("forge", name);
+          return ResourceLocation.fromNamespaceAndPath("forge", name);
       }
 
       private static ResourceLocation createCustomResourceLocation(String name) {
-          return new ResourceLocation(SpiderDens.MOD_ID, name);
+          return ResourceLocation.fromNamespaceAndPath(SpiderDens.MOD_ID, name);
       }
   }
 
@@ -53,7 +53,7 @@ public class TagsInit {
 
 
       private static ResourceLocation createResourceLocation(String name) {
-          return new ResourceLocation("forge", name);
+          return ResourceLocation.fromNamespaceAndPath("forge", name);
       }
   }
 }
