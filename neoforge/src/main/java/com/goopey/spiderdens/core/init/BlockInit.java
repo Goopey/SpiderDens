@@ -3,6 +3,7 @@ package com.goopey.spiderdens.core.init;
 import java.util.function.Supplier;
 
 import com.goopey.spiderdens.SpiderDens;
+import com.goopey.spiderdens.block.DenBlock;
 import com.goopey.spiderdens.block.FilterHopper;
 
 import net.minecraft.world.item.BlockItem;
@@ -16,6 +17,8 @@ public class BlockInit {
   public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(SpiderDens.MOD_ID);
 
   public static final DeferredBlock<Block> FILTER_HOPPER = registerBlock("filter_hopper", () -> new FilterHopper(Block.Properties.ofFullCopy(Blocks.HOPPER)));
+  
+  public static final DeferredBlock<Block> DEN = registerBlock("den", () -> new DenBlock(Block.Properties.ofFullCopy(Blocks.HOPPER)));
 
   /**
    * Used to register a Block and its BlockItem counterpart

@@ -1,6 +1,7 @@
 package com.goopey.spiderdens.core.init;
 
 import com.goopey.spiderdens.SpiderDens;
+import com.goopey.spiderdens.block.entity.DenBlockEntity;
 import com.goopey.spiderdens.block.entity.FilterHopperBlockEntity;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,4 +14,7 @@ public class BlockEntityInit {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FilterHopperBlockEntity>> FILTER_HOPPER_TILEENTITY = 
         BLOCK_ENTITY.register("filter_hopper", () -> BlockEntityType.Builder.of(FilterHopperBlockEntity::new, BlockInit.FILTER_HOPPER.get()).build(null));
+        
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DenBlockEntity>> DEN_TILEENTITY =
+        BLOCK_ENTITY.register("den", () -> BlockEntityType.Builder.of(DenBlockEntity::new, BlockInit.DEN.get()).build(null));
 }

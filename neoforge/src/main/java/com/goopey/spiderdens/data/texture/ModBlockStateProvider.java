@@ -25,6 +25,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         addHopper((HopperBlock) BlockInit.FILTER_HOPPER.value());
+        addBlock(BlockInit.DEN.get());
     }
 
     protected void addBlock(Block block) {
@@ -33,6 +34,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         this.simpleBlock(block, models().cubeAll(path, modLoc("block/" + path)));
         this.simpleBlockItem(block, models().getExistingFile(modLoc("block/" + path)));
     }
+
+    //#####################################################################
+    //                  BLOCK MODEL GENERATION METHODS
+    //#####################################################################
 
     /**
      * 
@@ -89,6 +94,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
             return models;
         }
     }
+
+    //###########################################
+    //              HELPER METHODS
+    //###########################################
 
     private int getFacingInt(Direction i) {
         switch (i.ordinal()) {
